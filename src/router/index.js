@@ -14,4 +14,17 @@ const router = new VueRouter({
   routes
 })
 
+// 配置全局的导航守卫
+router.beforeEach((to, from, next) => {
+  // 判断 to去哪儿
+  // 如果是去登录页，直接放行
+  // 如果不是，判断是否有token，有token放行，没有，去登录
+  const token = localStorage.getItem('token')
+  if (to.path === '/login' || token) {
+    next()
+  } else {
+    next('/login')
+  }
+})
+
 export default router

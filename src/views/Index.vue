@@ -1,6 +1,6 @@
 <template>
   <div class="index">
-      登录
+      shouye
   </div>
 </template>
 
