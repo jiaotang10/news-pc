@@ -6,7 +6,7 @@
         <el-input v-model="user.username" placeholder="请输入用户名" clearable></el-input>
       </el-form-item>
       <el-form-item label="密码" prop="password">
-        <el-input v-model="user.password" placeholder="请输入密码" type="password"></el-input>
+        <el-input v-model="user.password" placeholder="请输入密码" type="password" @keyup.enter.native="login"></el-input>
       </el-form-item>
       <el-form-item>
         <el-button type="primary" @click="login">提交</el-button>
@@ -50,10 +50,11 @@ export default {
       console.log('成功')
       const res = await this.$axios.post('/login', this.user)
       console.log(res.data)
-      if (res.data.statusCode === 200) {
-        localStorage.setItem('token', res.data.token)
-        localStorage.setItem('userId', res.data.data.user.id)
-        this.$router.push('/index')
+      const { statusCode, data } = res.data
+      if (statusCode === 200) {
+        localStorage.setItem('token', data.token)
+        localStorage.setItem('userId', data.user.id)
+        this.$router.push('/')
         this.$message(res.data.message)
       } else {
         this.$message.error(res.data.message)

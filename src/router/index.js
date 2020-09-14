@@ -5,10 +5,25 @@ Vue.use(VueRouter)
 // 配置异步组件
 const Index = () => import('../views/Index.vue')
 const Login = () => import('../views/Login.vue')
+const List = () => import('../views/List.vue')
+const Publish = () => import('../views/Publish.vue')
 
 const routes = [
-  { path: '/login', name: 'login', component: Login },
-  { path: '/index', name: 'index', component: Index }
+  {
+    path: '/login',
+    name: 'login',
+    component: Login
+  },
+  {
+    path: '/',
+    name: 'index',
+    component: Index,
+    // 将两个页面展示到main页面，就要写成children,记得配出口
+    children: [
+      { path: '/', name: 'list', component: List },
+      { path: '/publish', name: 'publish', component: Publish }
+    ]
+  }
 ]
 const router = new VueRouter({
   routes
